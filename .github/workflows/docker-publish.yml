@@ -10,7 +10,7 @@ env:
 
 jobs:
   push:
-    runs-on: centos-8
+    runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
     steps:
@@ -18,9 +18,7 @@ jobs:
 
       - name: Install tools
         run: |
-          dnf -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
-          dnf -y module enable php:remi-7.4
-          dnf -y install php php-json php-bcmath php-gd php-zip
+          apt -y install php php-json php-bcmath php-gd php-zip
           php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
           php composer-setup.php --install-dir=/usr/local/bin --filename=composer
           rm -f composer-setup.php
