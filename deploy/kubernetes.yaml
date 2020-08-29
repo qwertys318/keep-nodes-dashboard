@@ -53,20 +53,32 @@ spec:
             labels:
                 app: fpm
         spec:
+            initContainers:
+                -   name: volume-permission
+                    image: alpine
+                    securityContext:
+                        runAsUser: 0
+                    volumeMounts:
+                        -   name: keep-db-persistent-storage
+                            mountPath: /vol1
+                    command:
+                        - sh
+                        - -c
+                        - chown -R 82:82 /vol1
             containers:
                 -   name: fpm
-                    image: docker.pkg.github.com/qwertys318/keep-nodes-dashboard/fpm:0.1.1
+                    image: docker.pkg.github.com/qwertys318/keep-nodes-dashboard/fpm:0.1.4
                     ports: [{containerPort: 9000}]
                     volumeMounts:
-                        -   name: freeton-node-{%NODE_NUMBER%}-persistent-storage
+                        -   name: keep-db-persistent-storage
                             mountPath: /var/www/html/var/db
                     command:
-                        - bash
-                        - '-c'
+                        - sh
+                        - -c
                         - |
-                        - /var/www/html/bin/console doctrine:database:create --no-interaction
-                        - /var/www/html/bin/console doctrine:migrations:migrate --no-interaction
-                        - php-fpm
+                          php ./html/bin/console doctrine:database:create --no-interaction
+                          php ./bin/console doctrine:migrations:migrate --no-interaction
+                          php-fpm
             imagePullSecrets:
                 -   name: github-registry
             volumes:
