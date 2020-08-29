@@ -1,0 +1,8 @@
+monolog:
+    handlers:
+        update_node_data:
+            type: rotating_file
+            path: "%kernel.logs_dir%/update_node_data.%kernel.environment%.log"
+            level: info
+            channels: [update_node_data]
+            max_files: 30

@@ -1,0 +1,60 @@
+parameters:
+    env: '%env(APP_ENV)%'
+    siteName: '%env(SITE_NAME)%'
+    domain: '%env(DOMAIN)%'
+    web3_provider: '%env(WEB3_PROVIDER)%'
+    keep_bonding_address: '%env(KEEP_BONDING_ADDRESS)%'
+    version: '%env(APP_VERSION)%'
+
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+
+    App\Repository\:
+        resource: '../src/Repository'
+        autowire: true
+        tags: ['doctrine.repository_service']
+
+    App\Controller\IndexController:
+        tags: ['controller.service_arguments']
+        calls: [[setContainer, ['@service_container']]]
+        arguments:
+            - '%siteName%'
+            - '%domain%'
+            - '@App\Form\FormErrorCompiler'
+            - '@App\Keep\KeepBondingChecker'
+            - '@App\MonsterId\MonsterGenerator'
+            - '%kernel.project_dir%'
+
+    App\Form\FormErrorCompiler: []
+
+    App\Keep\KeepBondingChecker:
+        arguments:
+            - '%web3_provider%'
+            - '%keep_bonding_address%'
+            - '%kernel.project_dir%'
+
+    App\MonsterId\MonsterGenerator:
+        arguments:
+            - '%kernel.project_dir%'
+
+    App\Guzzle\Guzzle:
+        arguments: ['%env%']
+
+    App\Form\Constraint\EthAddressValidator:
+        tags: ['validator.constraint_validator']
+
+    App\Command\AbstractCommand:
+        abstract: true
+        calls:
+            - [setEm, ['@doctrine.orm.entity_manager']]
+
+    App\Command\UpdateNodeDataCommand:
+        parent: App\Command\AbstractCommand
+        arguments:
+            - '@logger'
+            - '@App\Keep\KeepBondingChecker'
+        tags:
+            - { name: 'console.command', command: 'app:update-node-data' }
+            - { name: monolog.logger, channel: update_node_data }

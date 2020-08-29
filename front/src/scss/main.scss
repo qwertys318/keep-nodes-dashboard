@@ -1,0 +1,39 @@
+$loading-background-color: #000;
+$loading-spinner-color: #fff;
+
+@import "loading.scss";
+
+body {
+  background-color: #121212;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
+.regTable {
+  display: table;
+  width: 100%;
+}
+
+.regTable__row {
+  display: table-row;
+}
+
+.regTable__cell {
+  padding: 5px;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.listTable__row__noHover:hover {
+  background-color: #1e1e1e !important;
+}
+
+.v-snack__wrapper {
+  min-width: auto!important;
+}

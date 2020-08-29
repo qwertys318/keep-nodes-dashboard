@@ -1,0 +1,39 @@
+{% trans_default_domain 'page' %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% if env == 'prod' %}
+        <link href="{{ front_path }}/app.css?{{ version }}" rel="stylesheet">
+    {% endif %}
+    {% for style in styles %}
+        <link rel=stylesheet href="{{ style }}">
+    {% endfor %}
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta name="yandex-verification" content="4e325ec06d492156" />
+    <link rel="icon" type="image/x-icon" href="{{ front_path }}/favicon.ico"/>
+    <title>{% if pageName is not null %}{{ pageName|trans }} | {% endif %}{{ siteName|upper }}</title>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but application doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong>
+</noscript>
+<div id="app">
+    <div class="background">
+        <div class="spinner"></div>
+    </div>
+</div>
+<script>var config = JSON.parse('{{ jsConfig|raw }}');</script>
+{% if env == 'prod' %}
+    <script src="{{ front_path }}/app.js?{{ version }}"></script>
+{% else %}
+    <script src="https://localhost:{{ frontDevPort }}/chunk-vendors.js?{{ version }}"></script>
+    <script src="https://localhost:{{ frontDevPort }}/app.js?{{ version }}"></script>
+{% endif %}
+{% for script in scripts %}
+    <script src="{{ script.src }}"{% for scriptAttribute in script.attributes %} {{ scriptAttribute }}{% endfor %}></script>
+{% endfor %}
+</body>
+</html>
