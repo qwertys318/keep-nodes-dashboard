@@ -39,9 +39,6 @@ services:
         arguments:
             - '%kernel.project_dir%'
 
-    App\Guzzle\Guzzle:
-        arguments: ['%env%']
-
     App\Form\Constraint\EthAddressValidator:
         tags: ['validator.constraint_validator']
 
@@ -49,6 +46,7 @@ services:
         abstract: true
         calls:
             - [setEm, ['@doctrine.orm.entity_manager']]
+            - [setProjectDir, ['%kernel.project_dir%']]
 
     App\Command\UpdateNodeDataCommand:
         parent: App\Command\AbstractCommand

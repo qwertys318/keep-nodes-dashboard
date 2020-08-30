@@ -15,4 +15,4 @@ monolog:
             process_psr_3_messages: false
             channels: ["!event", "!doctrine"]
         update_node_data:
-            path: "%kernel.logs_dir%/update_node_data.%kernel.environment%.log"
+            path: "php://stderr"

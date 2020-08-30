@@ -67,7 +67,7 @@ spec:
                         - chown -R 82:82 /vol1
             containers:
                 -   name: fpm
-                    image: docker.pkg.github.com/qwertys318/keep-nodes-dashboard/fpm:0.1.4
+                    image: docker.pkg.github.com/qwertys318/keep-nodes-dashboard/fpm:latest
                     ports: [{containerPort: 9000}]
                     volumeMounts:
                         -   name: keep-db-persistent-storage
@@ -76,7 +76,7 @@ spec:
                         - sh
                         - -c
                         - |
-                          php ./html/bin/console doctrine:database:create --no-interaction
+                          php ./bin/console doctrine:database:create --no-interaction
                           php ./bin/console doctrine:migrations:migrate --no-interaction
                           php-fpm
             imagePullSecrets:
@@ -85,3 +85,34 @@ spec:
                 -   name: keep-db-persistent-storage
                     persistentVolumeClaim:
                         claimName: keep-db-pv-claim
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: update-nodes-data
+spec:
+    schedule: "*/3 * * * *"
+    successfulJobsHistoryLimit: 3
+    failedJobsHistoryLimit: 3
+    jobTemplate:
+        spec:
+            parallelism: 1
+            template:
+                spec:
+                    restartPolicy: Never
+                    containers:
+                        - name: update-nodes-data
+                          image: docker.pkg.github.com/qwertys318/keep-nodes-dashboard/fpm:latest
+                          volumeMounts:
+                                -   name: keep-db-persistent-storage
+                                    mountPath: /var/www/html/var/db
+                          command:
+                                - sh
+                                - -c
+                                - php ./bin/console app:update-node-data --no-interaction
+                    imagePullSecrets:
+                        -   name: github-registry
+                    volumes:
+                        -   name: keep-db-persistent-storage
+                            persistentVolumeClaim:
+                                claimName: keep-db-pv-claim
