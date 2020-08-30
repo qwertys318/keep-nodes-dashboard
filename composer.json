@@ -11,7 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
         "phpdocumentor/reflection-docblock": "^5.2",
-        "sc0vu/web3.php": "^0.1.4",
+        "qwertys318/web3.php": "^1.0",
         "sensio/framework-extra-bundle": "^5.1",
         "sentry/sentry-symfony": "^3.5",
         "symfony/asset": "5.1.*",

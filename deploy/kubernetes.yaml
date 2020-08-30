@@ -73,11 +73,13 @@ spec:
                         -   name: keep-db-persistent-storage
                             mountPath: /var/www/html/var/db
                         -   name: env
-                            mountPath: /var/www/html
+                            mountPath: /var/www/html/env
                     command:
                         - sh
                         - -c
                         - |
+                          cp ./env/.env ./
+                          composer dump-env prod
                           php ./bin/console doctrine:database:create --no-interaction
                           php ./bin/console doctrine:migrations:migrate --no-interaction
                           php-fpm
@@ -112,12 +114,14 @@ spec:
                                 -   name: keep-db-persistent-storage
                                     mountPath: /var/www/html/var/db
                                 -   name: env
-                                    mountPath: /var/www/html
+                                    mountPath: /var/www/html/env
                           command:
                                 - sh
                                 - -c
-                                - composer dump-env prod
-                                - php ./bin/console app:update-node-data --no-interaction
+                                - |
+                                  cp ./env/.env ./
+                                  composer dump-env prod
+                                  php ./bin/console app:update-node-data --no-interaction
                     imagePullSecrets:
                         -   name: github-registry
                     volumes:

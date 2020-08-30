@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62b8d5fe844cffe7b80c0377c4109a29",
+    "content-hash": "1d5532e35ec32e35c8d72083d44c5b8a",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -3273,6 +3273,49 @@
             "time": "2020-03-23T09:12:05+00:00"
         },
         {
+            "name": "qwertys318/web3.php",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qwertys318/web3.php.git",
+                "reference": "80864eab31468a9d84b23e60c3864e85aa93402b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qwertys318/web3.php/zipball/80864eab31468a9d84b23e60c3864e85aa93402b",
+                "reference": "80864eab31468a9d84b23e60c3864e85aa93402b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "~6.0|^7.0",
+                "kornrunner/keccak": "~1.0",
+                "php": "^7.1",
+                "phpseclib/phpseclib": "~2.0.11"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Web3\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sc0Vu",
+                    "email": "alk03073135@gmail.com"
+                }
+            ],
+            "description": "Ethereum web3 interface.",
+            "time": "2020-08-28T02:25:02+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -3311,48 +3354,6 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
-        },
-        {
-            "name": "sc0vu/web3.php",
-            "version": "0.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sc0Vu/web3.php.git",
-                "reference": "1fb7762eb7763b0ccdbac1483819606e9edc6a49"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sc0Vu/web3.php/zipball/1fb7762eb7763b0ccdbac1483819606e9edc6a49",
-                "reference": "1fb7762eb7763b0ccdbac1483819606e9edc6a49",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "kornrunner/keccak": "~1.0",
-                "php": "^7.1",
-                "phpseclib/phpseclib": "~2.0.11"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Web3\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "sc0Vu",
-                    "email": "alk03073135@gmail.com"
-                }
-            ],
-            "description": "Ethereum web3 interface.",
-            "time": "2018-06-24T14:45:20+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
