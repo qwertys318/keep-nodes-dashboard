@@ -1,9 +1,9 @@
 rm -rf build
 mkdir build
 cd ./build
-git clone git@github.com:qwertys318/keep-nodes-dashboard.git
+git clone git@github.com:qwertys318/keep-nodes-dashboard.git .
 git checkout "${1}"
-sed -i -e "s/__APP_VERSION__/${1}/" ./.env
+mv .env.prod .env
 composer install --no-dev --no-interaction --no-cache
 composer dump-autoload -o
 composer dump-env prod

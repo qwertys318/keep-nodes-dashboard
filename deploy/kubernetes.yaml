@@ -72,6 +72,8 @@ spec:
                     volumeMounts:
                         -   name: keep-db-persistent-storage
                             mountPath: /var/www/html/var/db
+                        -   name: env
+                            mountPath: /var/www/html
                     command:
                         - sh
                         - -c
@@ -85,6 +87,9 @@ spec:
                 -   name: keep-db-persistent-storage
                     persistentVolumeClaim:
                         claimName: keep-db-pv-claim
+                -   name: env
+                    secret:
+                        secretName: env
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -106,9 +111,12 @@ spec:
                           volumeMounts:
                                 -   name: keep-db-persistent-storage
                                     mountPath: /var/www/html/var/db
+                                -   name: env
+                                    mountPath: /var/www/html
                           command:
                                 - sh
                                 - -c
+                                - composer dump-env prod
                                 - php ./bin/console app:update-node-data --no-interaction
                     imagePullSecrets:
                         -   name: github-registry
@@ -116,3 +124,6 @@ spec:
                         -   name: keep-db-persistent-storage
                             persistentVolumeClaim:
                                 claimName: keep-db-pv-claim
+                        -   name: env
+                            secret:
+                                secretName: env
